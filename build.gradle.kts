@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "2.3.10"
+    id("application")
 }
 
 group = "archives.tater.bot.verifier"
@@ -17,9 +18,13 @@ dependencies {
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(25)
 }
 
 tasks.test {
     useJUnitPlatform()
+}
+
+application {
+    mainClass = "archives.tater.bot.tierlist.Main"
 }
