@@ -14,7 +14,7 @@ import kotlin.time.Duration.Companion.seconds
 
 val dotenv: Dotenv = Dotenv.load()
 
-val DELAY = 10.seconds
+val DELAY = dotenv["DELAY"].toInt().seconds
 
 val ROLE = Snowflake(dotenv["ROLE_ID"])
 
