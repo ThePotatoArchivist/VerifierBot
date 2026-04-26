@@ -26,5 +26,5 @@ tasks.test {
 }
 
 application {
-    mainClass = "archives.tater.bot.tierlist.Main"
+    mainClass = "archives.tater.bot.verifier.Main"
 }
