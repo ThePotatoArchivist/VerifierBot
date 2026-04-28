@@ -2,6 +2,7 @@
 
 package archives.tater.bot.verifier
 
+import dev.kord.common.entity.MessageType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.entity.Member
@@ -17,6 +18,11 @@ val dotenv: Dotenv = Dotenv.load()
 val DELAY = dotenv["DELAY"].toInt().seconds
 
 val ROLE = Snowflake(dotenv["ROLE_ID"])
+
+val NORMAL_MESSAGE_TYPES = setOf(
+    MessageType.Default,
+    MessageType.Reply,
+)
 
 fun Member.display() = "$effectiveName ($id)"
 
@@ -38,7 +44,12 @@ suspend fun main() {
     with (Kord(dotenv["BOT_TOKEN"])) {
         on<MessageCreateEvent> {
             val member = member
-            if (member != null && !member.isBot && ROLE !in member.roleIds && member.id !in firstSeen) {
+            if (member != null
+                && !member.isBot
+                && message.type in NORMAL_MESSAGE_TYPES
+                && ROLE !in member.roleIds
+                && member.id !in firstSeen
+            ) {
                 println("Saw first message from ${member.display()}")
                 firstSeen.add(member.id)
                 delayedVerify(member)
