@@ -38,7 +38,7 @@ suspend fun main() {
     with (Kord(dotenv["BOT_TOKEN"])) {
         on<MessageCreateEvent> {
             val member = member
-            if (member != null && ROLE !in member.roleIds && member.id !in firstSeen) {
+            if (member != null && !member.isBot && ROLE !in member.roleIds && member.id !in firstSeen) {
                 println("Saw first message from ${member.display()}")
                 firstSeen.add(member.id)
                 delayedVerify(member)
